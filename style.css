@@ -579,36 +579,27 @@ body {
 
 .vibrate-mark {
     display: inline-block;
-    animation: vibrateLow 1.5s linear infinite;
+    animation: flipAndStand 4s cubic-bezier(0.175, 0.885, 0.32, 1.275) infinite;
     color: var(--color-white);
-    margin-left: 2px;
+    margin-left: 5px;
+    transform-origin: center;
 }
 
-@keyframes vibrateLow {
+@keyframes flipAndStand {
     0% {
-        transform: translate(0);
+        transform: rotate(0deg);
     }
 
     20% {
-        transform: translate(-1px, 1px);
-    }
-
-    40% {
-        transform: translate(-1px, -1px);
-    }
-
-    60% {
-        transform: translate(1px, 1px);
-    }
-
-    80% {
-        transform: translate(1px, -1px);
+        transform: rotate(360deg);
     }
 
     100% {
-        transform: translate(0);
+        transform: rotate(360deg);
     }
 }
+
+
 
 .email-link {
     font-size: 2rem;

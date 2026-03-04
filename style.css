@@ -677,11 +677,12 @@ body {
     }
 
     .hero-layout {
-        padding-top: 60px;
+        padding-top: 50px;
         /* offset for nav */
         flex-direction: column;
         /* Текст сверху, картинка снизу */
-        gap: 45px;
+        gap: 40px;
+        justify-content: flex-start !important;
     }
 
     .hero-content {
@@ -695,14 +696,24 @@ body {
 
     .hero-title {
         font-size: 2.2rem;
-        /* Еще меньше для мобильных */
         margin-bottom: 10px;
     }
 
     .hero-subtitle {
         font-size: 1rem;
-        margin-bottom: 20px;
+        margin-bottom: 15px;
+        /* Closer to button */
         width: 100%;
+    }
+
+    .hero-btn {
+        display: block !important;
+        margin: 0 auto !important;
+        width: fit-content !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        transform: none !important;
+        /* Force to final position if GSAP hangs */
     }
 
     .hero-image-wrapper {

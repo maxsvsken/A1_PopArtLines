@@ -896,3 +896,104 @@ body {
         right: 10px !important;
     }
 }
+
+/* Modal Styles */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    /* Сама подложка не скроллится */
+    background-color: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    display: none;
+    align-items: center;
+    /* Центрируем по вертикали */
+    justify-content: center;
+    /* Центрируем по горизонтали */
+}
+
+.modal.active {
+    display: flex;
+    /* Используем flex для центрирования при активации */
+}
+
+.modal-content {
+    background: rgba(255, 255, 255, 0.98);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    margin: 20px;
+    padding: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.8);
+    width: 90%;
+    max-width: 750px;
+    max-height: 85vh;
+    height: auto;
+    /* Высота подстраивается под текст */
+    border-radius: 20px;
+    position: relative;
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4);
+    animation: modalScaleIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    display: flex;
+    flex-direction: column;
+}
+
+.modal-body {
+    padding: 20px 20px 40px 20px;
+    overflow-y: auto;
+    /* Прокрутка только для текста */
+    flex: 1;
+}
+
+.close-modal {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    color: var(--color-black);
+    font-size: 30px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: color 0.3s;
+    z-index: 10;
+}
+
+.close-modal:hover {
+    color: var(--color-accent);
+}
+
+.modal-body h3 {
+    font-family: var(--font-heading);
+    margin: 20px 0 10px;
+    text-transform: uppercase;
+    font-size: 1.2rem;
+}
+
+.modal-body p {
+    font-size: 0.95rem;
+    color: var(--color-grey-dark);
+    margin-bottom: 15px;
+}
+
+@keyframes modalFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@media (max-width: 768px) {
+    .modal-content {
+        margin: 20% auto;
+        padding: 25px;
+    }
+}

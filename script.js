@@ -346,4 +346,29 @@ document.addEventListener('DOMContentLoaded', () => {
             }, 3000);
         });
     }
+
+    // --- Modal Logic ---
+    const modal = document.getElementById('policyModal');
+    const policyLink = document.getElementById('policyLink');
+    const closeBtn = document.querySelector('.close-modal');
+
+    if (modal && policyLink && closeBtn) {
+        policyLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden'; // Lock scroll
+        });
+
+        closeBtn.addEventListener('click', () => {
+            modal.classList.remove('active');
+            document.body.style.overflow = ''; // Unlock scroll
+        });
+
+        window.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                modal.classList.remove('active');
+                document.body.style.overflow = ''; // Unlock scroll
+            }
+        });
+    }
 });

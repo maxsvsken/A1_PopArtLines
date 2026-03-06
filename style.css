@@ -116,12 +116,21 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    /* Vector SVG for perfect crispness */
-    background: url('images/rays.svg') center center no-repeat;
+    /* Pure white background for the whole section blend */
+    background-color: rgb(37, 67, 149);
+    background-image: url('images/vector-bright-black-and-white-rays-background.jpg');
     background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
 
-    opacity: 0.12;
-    /* Subtle vector rays */
+    /* Screen mode: Black rays become the BG color (Blue), White stays White */
+    background-blend-mode: screen;
+
+    /* High contrast makes the blue more vibrant and the white more 'pure' */
+    filter: contrast(1.8) brightness(1.1);
+
+    opacity: 0.25;
+    /* Visible but professional */
     z-index: 0;
     pointer-events: none;
 }
@@ -171,34 +180,42 @@ body {
     object-fit: cover;
 }
 
-/* 01 Legend Section - Blue Rays Pattern */
-.legend-section,
-.director-section {
+/* 01 Legend Section - Reverted to clean white or original subtle pattern */
+.legend-section {
+    background-color: var(--color-grey-light);
+    background-image: repeating-linear-gradient(45deg, transparent, transparent 15px, rgba(0, 0, 0, 0.02) 15px, rgba(0, 0, 0, 0.02) 16px);
+}
+
+/* 02 Director & Myths Sections - Blue Rays Pattern */
+.director-section,
+.myths-section {
     position: relative;
     overflow: hidden;
     background-color: var(--color-white) !important;
 }
 
-.legend-section::before,
-.director-section::before {
+.director-section::before,
+.myths-section::before {
     content: '';
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    /* Vector SVG for perfect crispness */
-    background: url('images/rays.svg') center center no-repeat;
+    background-color: rgb(37, 67, 149);
+    background-image: url('images/vector-bright-black-and-white-rays-background.jpg');
     background-size: cover;
-
-    opacity: 0.08;
-    /* Even more subtle in content sections */
+    background-position: center;
+    background-repeat: no-repeat;
+    background-blend-mode: screen;
+    filter: contrast(1.8) brightness(1.1);
+    opacity: 0.15;
     z-index: 0;
     pointer-events: none;
 }
 
-.legend-section>.container,
-.director-section>.container {
+.director-section>.container,
+.myths-section>.container {
     position: relative;
     z-index: 1;
 }

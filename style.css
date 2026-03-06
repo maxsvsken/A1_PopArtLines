@@ -900,28 +900,41 @@ body {
     .code-section {
         height: auto !important;
         min-height: auto !important;
-        padding: 60px 0 !important;
+        padding: 40px 0 !important;
         display: block !important;
     }
 
     .code-layout {
-        display: block !important;
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 0 !important;
     }
 
     .code-intro {
         position: static !important;
-        margin-bottom: 30px;
+        width: 100% !important;
+        margin-bottom: 30px !important;
+        text-align: center;
+    }
+
+    .code-intro .art-frame {
+        max-width: 100% !important;
+        margin: 20px auto !important;
     }
 
     .code-list {
+        width: 100% !important;
         padding-right: 0 !important;
         transform: none !important;
-        /* Disable GSAP move on mobile */
+        /* Force reset GSAP */
+        position: relative !important;
+        margin-top: 0 !important;
     }
 
     .code-item {
         gap: 20px;
-        padding: 20px 0;
+        padding: 25px 0;
+        transform: none !important;
     }
 
     .code-num {
@@ -929,11 +942,12 @@ body {
     }
 
     .code-content h4 {
-        font-size: 1.1rem;
+        font-size: 1.2rem;
     }
 
     .code-content p {
-        font-size: 0.9rem;
+        font-size: 0.95rem;
+        line-height: 1.5;
     }
 
     /* Form grid fix for mobile */
@@ -1007,8 +1021,8 @@ body {
 
 @media (max-width: 900px) {
     .dot-nav {
-        /* Keep visible but maybe adjust position if needed */
-        right: 10px !important;
+        display: none !important;
+        /* Hide dots on mobile/tablets to avoid overlap */
     }
 }
 

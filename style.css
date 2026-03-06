@@ -116,19 +116,17 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    /* Exact requested color: rgb(36, 67, 149) */
+    /* Reliability fix: using blend modes for precise RGB(36, 67, 149) */
     background-color: rgb(36, 67, 149);
+    background-image: url('images/vector-bright-black-and-white-rays-background.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-blend-mode: screen;
+    /* Black becomes color, white stays white */
 
-    /* Using the rays image as a mask to show the color through */
-    -webkit-mask-image: url('images/vector-bright-black-and-white-rays-background.jpg');
-    mask-image: url('images/vector-bright-black-and-white-rays-background.jpg');
-    -webkit-mask-size: cover;
-    mask-size: cover;
-    -webkit-mask-position: center;
-    mask-position: center;
-
-    opacity: 0.15;
-    /* Professional level for business site */
+    opacity: 0.22;
+    /* Increased opacity for better visibility of the blue */
     z-index: 0;
     pointer-events: none;
 }

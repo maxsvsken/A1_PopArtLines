@@ -180,10 +180,39 @@ body {
     object-fit: cover;
 }
 
-/* 01 Legend Section - Dynamic Diagonal Lines */
-.bg-light.legend-section {
-    background-color: var(--color-grey-light);
-    background-image: repeating-linear-gradient(45deg, transparent, transparent 15px, rgba(0, 0, 0, 0.02) 15px, rgba(0, 0, 0, 0.02) 16px);
+/* 01 Legend Section - Blue Rays Pattern */
+.legend-section,
+.director-section {
+    position: relative;
+    overflow: hidden;
+    background-color: var(--color-white) !important;
+}
+
+.legend-section::before,
+.director-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgb(37, 67, 149);
+    background-image: url('images/vector-bright-black-and-white-rays-background.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-blend-mode: screen;
+    filter: contrast(1.8) brightness(1.1);
+    opacity: 0.15;
+    /* Subtle opacity for content readability */
+    z-index: 0;
+    pointer-events: none;
+}
+
+.legend-section>.container,
+.director-section>.container {
+    position: relative;
+    z-index: 1;
 }
 
 /* 02 Today Section - Classic Grid Pattern */

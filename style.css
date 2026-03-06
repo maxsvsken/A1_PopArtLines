@@ -116,17 +116,21 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    /* Reliability fix: using blend modes for precise RGB(36, 67, 149) */
+    /* No transparency here: the blend mode handles it */
     background-color: rgb(36, 67, 149);
     background-image: url('images/vector-bright-black-and-white-rays-background.jpg');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    background-blend-mode: screen;
-    /* Black becomes color, white stays white */
 
-    opacity: 0.22;
-    /* Increased opacity for better visibility of the blue */
+    /* VIBRANT FIX: Multiply mode with white/grey image */
+    background-blend-mode: multiply;
+    /* White in image disappears, rays become the BG color */
+
+    /* Make it subtle yet pure by using high opacity but a light/faded source image (if it was grey) */
+    /* If the image has black rays, they stay black in multiply. Let's use SCREEN again but with a DARK background color to make it vibrant. */
+    /* Actually, most 'vibrant' and 'clean' way: */
+    opacity: 0.15;
     z-index: 0;
     pointer-events: none;
 }

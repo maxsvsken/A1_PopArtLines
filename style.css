@@ -969,10 +969,14 @@ details[open].faq-item p {
         padding: 100px 0 60px 0;
     }
 
+    .hero {
+        padding-top: 80px !important;
+    }
+
     .hero-layout.container {
         margin-top: 0 !important;
-        padding-top: 40px;
-        /* Balanced top padding */
+        padding-top: 0;
+        /* Lifted higher */
     }
 
     .hero-layout {

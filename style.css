@@ -180,6 +180,53 @@ body {
     object-fit: cover;
 }
 
+/* Custom Speech Bubble */
+.speech-bubble {
+    position: absolute;
+    top: -5%;
+    right: -5%;
+    max-width: 60%;
+    background: var(--color-white);
+    padding: 20px 30px;
+    border: 3px solid var(--color-black);
+    border-radius: 30px;
+    font-family: var(--font-heading);
+    font-size: 1.5rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: var(--color-black);
+    box-shadow: 8px 8px 0px rgba(0, 0, 0, 1);
+    transform: rotate(3deg);
+    text-align: center;
+    line-height: 1.2;
+    z-index: 10;
+}
+
+.speech-bubble::after {
+    content: '';
+    position: absolute;
+    bottom: -18px;
+    left: 20%;
+    border-width: 20px 20px 0 0;
+    border-style: solid;
+    border-color: var(--color-black) transparent transparent transparent;
+    display: block;
+    width: 0;
+}
+
+.speech-bubble::before {
+    content: '';
+    position: absolute;
+    bottom: -11px;
+    left: 22%;
+    border-width: 15px 15px 0 0;
+    border-style: solid;
+    border-color: var(--color-white) transparent transparent transparent;
+    display: block;
+    width: 0;
+    z-index: 1;
+}
+
 /* 01 Legend Section - Pop-Art Halftone Dots Background */
 .legend-section {
     background-color: var(--color-white);
@@ -302,7 +349,21 @@ body {
     z-index: 1000;
     background: transparent;
     border-bottom: none;
-    padding: 20px 0;
+    padding: 25px 0;
+    transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+.navbar-scrolled {
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    padding: 12px 0;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.08);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.navbar-scrolled .logo {
+    font-size: 1.8rem;
 }
 
 .nav-container {
@@ -318,6 +379,7 @@ body {
     font-family: var(--font-heading);
     font-weight: 700;
     letter-spacing: -0.05em;
+    transition: all 0.4s ease;
 }
 
 .nav-links {

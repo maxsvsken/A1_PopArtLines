@@ -25,7 +25,6 @@
 html {
     scroll-behavior: smooth;
     overflow-x: hidden;
-    scroll-padding-top: 90px;
     /* Offset for fixed header */
 }
 

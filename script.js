@@ -7,6 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (burger) {
         burger.addEventListener('click', () => {
             const navbar = document.querySelector('.navbar');
+            navLinks.style.display = ''; // Clear inline block/none styles
             navLinks.classList.toggle('nav-active');
             burger.classList.toggle('open');
             if (navbar) navbar.classList.toggle('menu-open');
@@ -184,7 +185,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
 
                 if (window.innerWidth <= 900 && navLinks) {
-                    navLinks.style.display = 'none';
+                    navLinks.classList.remove('nav-active');
+                    navLinks.style.display = ''; // Clear inline styles if any exist
+                    const b = document.getElementById('burger');
+                    if (b) b.classList.remove('open');
+                    const n = document.querySelector('.navbar');
+                    if (n) n.classList.remove('menu-open');
                 }
             }
         });

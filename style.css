@@ -740,6 +740,7 @@ details[open].faq-item p {
     position: sticky;
     top: 120px;
     align-self: start;
+    text-align: center;
 }
 
 .code-list {

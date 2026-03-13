@@ -1186,9 +1186,9 @@ details[open].faq-item p {
         gap: 20px;
         padding: 25px 0;
         transform: none !important;
-        flex-direction: row-reverse;
-        /* Put number on the right */
-        text-align: right;
+        flex-direction: row;
+        /* Put number on the left */
+        text-align: left;
         align-items: flex-start;
     }
 

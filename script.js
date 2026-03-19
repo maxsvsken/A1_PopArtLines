@@ -301,67 +301,37 @@ document.addEventListener('DOMContentLoaded', () => {
                             scrub: 1,
                             pinSpacing: true,
                             onRefresh: () => {
-                                // Calculate distance to scroll the list safely on any device
-                                gsap.set(list, { y: 0 }); // Temporarily reset
+                                // Calculate distance to scroll the list safely
+                                gsap.set(list, { y: 0 }); // reset
                                 if (window.innerWidth <= 1100) {
-                                    gsap.set(intro, { opacity: 1, marginTop: 0, marginBottom: 20 });
+                                    gsap.set(intro, { y: 0, opacity: 1, marginTop: 0, clipPath: 'none' });
                                 }
                                 
                                 const listOriginTop = list.getBoundingClientRect().top;
                                 const sectionTop = section.getBoundingClientRect().top;
                                 const listTopInContainer = listOriginTop - sectionTop;
                                 
-                                // How much of the list is hidden below the viewport
                                 const visibleAreaHeight = window.innerHeight - listTopInContainer;
-                                // Core distance to bring the bottom of the list to the bottom of the screen
                                 scrollDistance = Math.max(0, list.offsetHeight - visibleAreaHeight + 40);
-                                
-                                // Mobile: we also need distance to collapse the intro
-                                if (window.innerWidth <= 1100) {
-                                    scrollDistance += intro.offsetHeight;
-                                }
                             },
                             onUpdate: (self) => {
                                 if (scrollDistance > 0) {
-                                    const fadeEnd = 0.25; // finish intro collapse at 25% of scroll
-                                    let y = 0;
+                                    const y = -scrollDistance * self.progress;
 
                                     if (window.innerWidth <= 1100) {
-                                        const introProg = gsap.utils.normalize(0, fadeEnd, self.progress);
-                                        const clampedIntroProg = gsap.utils.clamp(0, 1, introProg);
-                                        
-                                        // Use clip-path for a cleaner disappearance from the bottom up
-                                        const clipValue = (1 - clampedIntroProg) * 100;
+                                        // Mobile: both elements move up together
+                                        gsap.set(list, { y, opacity: 1, visibility: 'visible' });
                                         gsap.set(intro, { 
-                                            opacity: 1 - clampedIntroProg,
-                                            marginTop: -intro.offsetHeight * clampedIntroProg,
-                                            clipPath: `inset(0 0 ${100 - clipValue}% 0)`,
-                                            pointerEvents: clampedIntroProg > 0.9 ? 'none' : 'auto'
+                                            y: y, 
+                                            opacity: gsap.utils.clamp(0, 1, 1 - (self.progress * 2)) 
                                         });
-
-                                        if (self.progress > fadeEnd) {
-                                            const listProg = gsap.utils.normalize(fadeEnd, 1, self.progress);
-                                            const totalMove = scrollDistance - intro.offsetHeight;
-                                            y = -totalMove * listProg;
-                                            gsap.set(list, { opacity: 1, visibility: 'visible', y });
-                                        } else {
-                                            y = 0; 
-                                            // KEEP LIST COMPLETELY HIDDEN AND AT TOP while image is fading
-                                            gsap.set(list, { opacity: 0, visibility: 'hidden', y: 0 });
-                                        }
                                     } else {
-                                        y = -scrollDistance * self.progress;
+                                        // Desktop: standard behavior
                                         gsap.set(list, { y });
                                     }
                                     
-                                    // Mask fading logic
-                                    let fadeAmount = 0;
-                                    const maskThreshold = window.innerWidth <= 1100 ? fadeEnd + 0.05 : 0.05;
-                                    if (self.progress > maskThreshold) {
-                                        const textProg = gsap.utils.normalize(maskThreshold, 1, self.progress);
-                                        fadeAmount = Math.min(80, textProg * 600);
-                                    }
-                                    
+                                    // Mask fading logic (only for top)
+                                    const fadeAmount = Math.min(80, self.progress * 400);
                                     const mask = `linear-gradient(to bottom, transparent 0px, black ${fadeAmount}px, black calc(100% - 80px), transparent 100%)`;
                                     gsap.set(section.querySelector('.code-text-content'), {
                                         webkitMaskImage: mask,

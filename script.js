@@ -301,8 +301,9 @@ document.addEventListener('DOMContentLoaded', () => {
                             scrub: 1,
                             pinSpacing: true,
                             onRefresh: () => {
-                                // Mobile: we need space for the sticky headers (approx 160px)
-                                const headersOffset = window.innerWidth <= 1100 ? 160 : 0;
+                                // Mobile & Portable: we need space for the sticky headers (approx 160px)
+                                const isPortable = window.innerWidth <= 1320;
+                                const headersOffset = isPortable ? 160 : 0;
                                 
                                 // Reset positions with offset
                                 gsap.set([list, intro], { y: headersOffset });
@@ -323,7 +324,7 @@ document.addEventListener('DOMContentLoaded', () => {
                                     const offset = section._headersOffset || 0;
                                     const y = offset - (scrollDistance * self.progress);
 
-                                    if (window.innerWidth <= 1100) {
+                                    if (window.innerWidth <= 1320) {
                                         gsap.set([list, intro], { y });
                                         gsap.set(list, { opacity: 1, visibility: 'visible' });
                                         gsap.set(intro, { opacity: gsap.utils.clamp(0.2, 1, 1 - (self.progress * 1.5)) });

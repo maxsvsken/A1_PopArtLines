@@ -290,58 +290,61 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 if (list && intro) {
                     const items = section.querySelectorAll('.code-item');
+                    const totalItems = items.length;
+                    
                     // Set stacking order upfront
                     items.forEach((item, i) => {
                         gsap.set(item, { zIndex: i + 1 });
                     });
 
                     // Main Pinning ScrollTrigger
-                    ScrollTrigger.create({
+                    const mainST = ScrollTrigger.create({
                         trigger: section,
                         start: "top top",
-                        end: () => `+=${items.length * 100}%`, // 100% of height per item
+                        end: () => `+=${totalItems * 100}%`, // Sufficient length
                         pin: true,
                         pinSpacing: true,
-                        scrub: 0.5
+                        scrub: 1
                     });
 
                     // Individual Item Animations
                     items.forEach((item, i) => {
-                        if (i === items.length - 1) return; // Last item doesn't collapse
+                        if (i === totalItems - 1) return; // Last item doesn't collapse
 
                         const content = item.querySelector('.code-content p');
                         const header = item.querySelector('.code-content h4');
                         const num = item.querySelector('.code-num');
-                        const headerHeight = Math.max(header.offsetHeight, num.offsetHeight) + 60;
-
+                        
+                        // Use a dummy tween to drive the scroll-based stacking
                         gsap.timeline({
                             scrollTrigger: {
                                 trigger: section,
-                                start: () => `top+=${i * (window.innerHeight)} top`,
-                                end: () => `top+=${(i + 1) * (window.innerHeight)} top`,
-                                scrub: 0.5
+                                start: () => mainST.start + (i * window.innerHeight),
+                                end: () => mainST.start + ((i + 1) * window.innerHeight),
+                                scrub: true
                             }
                         })
                         .to(content, {
                             height: 0,
                             opacity: 0,
                             margin: 0,
-                            ease: "power1.inOut"
+                            padding: 0,
+                            ease: "none"
                         })
                         .to(item, {
-                            marginBottom: -(item.offsetHeight - headerHeight),
-                            ease: "power1.inOut"
+                            marginBottom: () => {
+                                const h = Math.max(header.offsetHeight, num.offsetHeight) + 60;
+                                return -(item.offsetHeight - h);
+                            },
+                            ease: "none"
                         }, "<");
                     });
-
-                    // Refresh to make sure pinning and start/end are correct
-                    ScrollTrigger.refresh();
 
                     // Add dot tracking
                     ScrollTrigger.create({
                         trigger: section,
                         start: "top 50%",
-                        end: () => `+=${items.length * 100}%`,
+                        end: () => mainST.end,
                         onEnter: () => updateDot(index),
                         onEnterBack: () => updateDot(index)
                     });

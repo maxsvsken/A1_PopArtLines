@@ -328,17 +328,9 @@ document.addEventListener('DOMContentLoaded', () => {
                                         gsap.set(list, { opacity: 1, visibility: 'visible' });
                                         gsap.set(intro, { opacity: gsap.utils.clamp(0.2, 1, 1 - (self.progress * 1.5)) });
                                     } else {
-                                        // Desktop: standard y adjustment if needed, usually offset is 0
+                                        // Desktop: standard y adjustment
                                         gsap.set(list, { y: -(scrollDistance * self.progress) });
                                     }
-                                    
-                                    // Mask fading logic (only for top)
-                                    const fadeAmount = Math.min(80, self.progress * 400);
-                                    const mask = `linear-gradient(to bottom, transparent 0px, black ${fadeAmount}px, black calc(100% - 80px), transparent 100%)`;
-                                    gsap.set(section.querySelector('.code-text-content'), {
-                                        webkitMaskImage: mask,
-                                        maskImage: mask
-                                    });
                                 }
                             }
                         }

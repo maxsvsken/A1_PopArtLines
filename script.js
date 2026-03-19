@@ -330,17 +330,22 @@ document.addEventListener('DOMContentLoaded', () => {
                                         const introProg = gsap.utils.normalize(0, fadeEnd, self.progress);
                                         const clampedIntroProg = gsap.utils.clamp(0, 1, introProg);
                                         
+                                        // Use clip-path for a cleaner disappearance from the bottom up
+                                        const clipValue = (1 - clampedIntroProg) * 100;
                                         gsap.set(intro, { 
                                             opacity: 1 - clampedIntroProg,
                                             marginTop: -intro.offsetHeight * clampedIntroProg,
+                                            clipPath: `inset(0 0 ${100 - clipValue}% 0)`,
                                             pointerEvents: clampedIntroProg > 0.9 ? 'none' : 'auto'
                                         });
 
                                         if (self.progress > fadeEnd) {
                                             const listProg = gsap.utils.normalize(fadeEnd, 1, self.progress);
-                                            // The total amount we move the list is its overflow + the space intro occupied
+                                            // Ensure movement is based purely on the text length after image is gone
                                             const totalMove = scrollDistance - intro.offsetHeight;
                                             y = -totalMove * listProg;
+                                        } else {
+                                            y = 0; // STICK ON ZERO while image is fading
                                         }
                                     } else {
                                         y = -scrollDistance * self.progress;

@@ -341,17 +341,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
                                         if (self.progress > fadeEnd) {
                                             const listProg = gsap.utils.normalize(fadeEnd, 1, self.progress);
-                                            // Ensure movement is based purely on the text length after image is gone
                                             const totalMove = scrollDistance - intro.offsetHeight;
                                             y = -totalMove * listProg;
+                                            gsap.set(list, { opacity: 1, visibility: 'visible', y });
                                         } else {
-                                            y = 0; // STICK ON ZERO while image is fading
+                                            y = 0; 
+                                            // KEEP LIST COMPLETELY HIDDEN AND AT TOP while image is fading
+                                            gsap.set(list, { opacity: 0, visibility: 'hidden', y: 0 });
                                         }
                                     } else {
                                         y = -scrollDistance * self.progress;
+                                        gsap.set(list, { y });
                                     }
-
-                                    gsap.set(list, { y });
                                     
                                     // Mask fading logic
                                     let fadeAmount = 0;

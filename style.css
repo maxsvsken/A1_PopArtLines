@@ -826,25 +826,27 @@ details[open].faq-item p {
     display: flex !important;
     align-items: flex-start !important;
     overflow: hidden !important;
-    /* Обрезает невидимый хвост секции, блокировавший клики */
-}
-
-.code-section>.container {
-    margin-top: 0 !important;
 }
 
 .code-layout {
     display: grid;
     grid-template-columns: 1fr 1.5fr;
-    gap: 40px 80px;
+    gap: 0 80px;
     width: 100%;
     align-items: flex-start;
 }
 
-.code-intro-img {
+.code-layout .section-label {
+    grid-column: 1 / -1;
+    margin-bottom: 30px;
+}
+
+.code-sidebar {
     position: sticky;
-    top: 100px;
-    align-self: start;
+    top: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
     text-align: center;
 }
 

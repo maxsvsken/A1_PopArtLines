@@ -15,6 +15,11 @@
     --font-text: 'Manrope', sans-serif;
 }
 
+html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 100px; /* Offset for sticky header */
+}
+
 /* Reset */
 * {
     margin: 0;

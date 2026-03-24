@@ -118,6 +118,7 @@ body {
 
 .hero-spacer {
     flex: 1;
+    min-height: 20px;
 }
 
 .hero::before {

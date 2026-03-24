@@ -287,6 +287,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (section.id === 'code') {
                 const list = section.querySelector('.code-list');
                 const intro = section.querySelector('.code-intro-img');
+                const title = section.querySelector('.code-main-title');
 
                 if (list && intro) {
                     let mm = gsap.matchMedia();
@@ -304,6 +305,7 @@ document.addEventListener('DOMContentLoaded', () => {
                                 onRefresh: () => {
                                     gsap.set(intro, { clearProps: "all" });
                                     gsap.set(list, { clearProps: "all" });
+                                    if (title) gsap.set(title, { clearProps: "all" });
                                     const listHeight = list.offsetHeight;
                                     scrollDistance = Math.max(0, listHeight - window.innerHeight + 100);
                                 },
@@ -328,6 +330,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     mm.add("(max-width: 1320px)", () => {
                         gsap.set(intro, { clearProps: "all" });
                         gsap.set(list, { clearProps: "all" });
+                        if (title) gsap.set(title, { clearProps: "all" });
                         
                         ScrollTrigger.create({
                             trigger: section,

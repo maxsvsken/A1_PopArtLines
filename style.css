@@ -985,7 +985,42 @@ details[open].faq-item p {
         margin-top: 0;
     }
 
-    .hero-co    /* Mobile Wrapper for Headers and Intro */
+    .hero-content {
+        text-align: center;
+        padding-bottom: 40px;
+    }
+
+    .hero-image-wrapper {
+        width: 100%;
+        max-width: 600px;
+        margin: 0 auto;
+        overflow: visible;
+    }
+
+    .hero-image-wrapper .speech-bubble {
+        top: -30px;
+        /* Опускаем облако пониже на средних экранах */
+        right: 0;
+        left: 0;
+        margin: 0 auto;
+    }
+
+    .legend-layout,
+    .director-layout,
+    .code-layout {
+        grid-template-columns: 1fr;
+        gap: 40px;
+    }
+
+    .director-text {
+        order: 2;
+    }
+
+    .director-img {
+        order: 1;
+    }
+
+    /* Mobile Wrapper for Headers and Intro */
     #code .section-label,
     #code .code-main-title {
         width: 100% !important;

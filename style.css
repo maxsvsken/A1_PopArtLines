@@ -265,6 +265,7 @@ body {
     overflow: hidden;
     z-index: 10;
     border-top: 2px solid var(--color-accent);
+    border-bottom: 2px solid var(--color-accent);
     display: flex;
 }
 

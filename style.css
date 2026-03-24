@@ -188,7 +188,7 @@ body {
     overflow: visible;
     position: relative;
     margin-top: 40px;
-    /* Room for speech bubble */
+    margin-bottom: 40px; /* Standard gap to Button (mobile/stack) */
 }
 
 .hero-image {
@@ -1074,10 +1074,9 @@ details[open].faq-item p {
     .code-intro-img {
         position: relative !important;
         z-index: 20 !important;
-        padding-bottom: 10px !important;
         text-align: center;
         flex-shrink: 0;
-        margin-bottom: 20px !important;
+        margin-bottom: 40px !important; /* Unified Standard Gap */
     }
 
     .code-intro-img .art-frame {

@@ -289,62 +289,53 @@ document.addEventListener('DOMContentLoaded', () => {
                 const intro = section.querySelector('.code-intro-img');
 
                 if (list && intro) {
-                    let scrollDistance = 0;
+                    let mm = gsap.matchMedia();
 
-                    const tl = gsap.timeline({
-                        scrollTrigger: {
-                            trigger: section,
-                            start: "top top",
-                            end: () => `+=${scrollDistance}`,
-                            pin: true,
-                            scrub: 1,
-                            pinSpacing: true,
-                            onRefresh: () => {
-                                const isPortable = window.innerWidth <= 1320;
-                                // Pull everything higher
-                                const headersOffset = isPortable ? 60 : 0;
-                                
-                                gsap.set(intro, { y: headersOffset, opacity: 1 });
-                                const introHeight = intro.offsetHeight;
-                                // Zero extra gap
-                                gsap.set(list, { y: headersOffset + introHeight, opacity: 1 });
-                                
-                                const listHeight = list.offsetHeight;
-                                scrollDistance = Math.max(0, (listHeight + introHeight + headersOffset) - window.innerHeight);
-                                
-                                section._headersOffset = headersOffset;
-                                section._introHeight = introHeight;
-                            },
-                            onUpdate: (self) => {
-                                if (scrollDistance > 0) {
-                                    const hOffset = section._headersOffset || 0;
-                                    const iHeight = section._introHeight || 0;
-                                    const scrollY = scrollDistance * self.progress;
-
-                                    if (window.innerWidth <= 1320) {
-                                        gsap.set(intro, { 
-                                            y: hOffset - scrollY, 
-                                            opacity: 1 - (self.progress * 1.5)
-                                        });
-                                        gsap.set(list, { 
-                                            y: hOffset + iHeight - scrollY,
-                                            opacity: 1
-                                        });
-                                    } else {
+                    mm.add("(min-width: 1321px)", () => {
+                        let scrollDistance = 0;
+                        const tl = gsap.timeline({
+                            scrollTrigger: {
+                                trigger: section,
+                                start: "top top",
+                                end: () => `+=${scrollDistance}`,
+                                pin: true,
+                                scrub: 1,
+                                pinSpacing: true,
+                                onRefresh: () => {
+                                    gsap.set(intro, { clearProps: "all" });
+                                    gsap.set(list, { clearProps: "all" });
+                                    const listHeight = list.offsetHeight;
+                                    scrollDistance = Math.max(0, listHeight - window.innerHeight + 100);
+                                },
+                                onUpdate: (self) => {
+                                    if (scrollDistance > 0) {
+                                        const scrollY = scrollDistance * self.progress;
                                         gsap.set(list, { y: -scrollY });
                                     }
                                 }
                             }
-                        }
+                        });
+
+                        ScrollTrigger.create({
+                            trigger: section,
+                            start: "top 50%",
+                            end: () => `+=${scrollDistance}`,
+                            onEnter: () => updateDot(index),
+                            onEnterBack: () => updateDot(index)
+                        });
                     });
 
-                    // Add dot tracking
-                    ScrollTrigger.create({
-                        trigger: section,
-                        start: "top 50%",
-                        end: () => `+=${scrollDistance}`,
-                        onEnter: () => updateDot(index),
-                        onEnterBack: () => updateDot(index)
+                    mm.add("(max-width: 1320px)", () => {
+                        gsap.set(intro, { clearProps: "all" });
+                        gsap.set(list, { clearProps: "all" });
+                        
+                        ScrollTrigger.create({
+                            trigger: section,
+                            start: "top 50%",
+                            end: "bottom 50%",
+                            onEnter: () => updateDot(index),
+                            onEnterBack: () => updateDot(index)
+                        });
                     });
 
                     return; // Skip default logic for this section

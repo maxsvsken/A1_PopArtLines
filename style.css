@@ -985,75 +985,33 @@ details[open].faq-item p {
         margin-top: 0;
     }
 
-    .hero-content {
-        text-align: center;
-    }
-
-    .hero-image-wrapper {
-        width: 100%;
-        max-width: 600px;
-        margin: 0 auto;
-        overflow: visible;
-    }
-
-    .hero-image-wrapper .speech-bubble {
-        top: -30px;
-        /* Опускаем облако пониже на средних экранах */
-        right: 0;
-        left: 0;
-        margin: 0 auto;
-    }
-
-    .legend-layout,
-    .director-layout,
-    .code-layout {
-        grid-template-columns: 1fr;
-        gap: 40px;
-    }
-
-    .director-text {
-        order: 2;
-    }
-
-    .director-img {
-        order: 1;
-    }
-
-    /* Mobile Sticky Wrapper for Headers and Intro */
+    .hero-co    /* Mobile Wrapper for Headers and Intro */
     #code .section-label,
-    #code .code-main-title,
-    .code-intro-img {
-        background-color: var(--color-dark);
-        background-image: radial-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px);
-        background-size: 8px 8px;
+    #code .code-main-title {
         width: 100% !important;
-        margin: 0 !important;
+        margin-bottom: 20px !important;
     }
 
     #code .section-label {
-        position: sticky !important;
-        top: 0;
-        z-index: 30 !important;
+        position: relative !important;
         padding-top: 20px;
         padding-bottom: 5px;
     }
 
     #code .code-main-title {
-        position: sticky !important;
-        top: 40px; /* pull title higher */
-        z-index: 25 !important;
-        padding-bottom: 0px; /* remove title bottom space */
-        /* Make bottom of the sticky panel semi-transparent */
-        -webkit-mask-image: linear-gradient(to bottom, black 0%, black 85%, transparent 100%);
-        mask-image: linear-gradient(to bottom, black 0%, black 85%, transparent 100%);
+        position: relative !important;
+        padding-bottom: 0px; 
+        -webkit-mask-image: none !important;
+        mask-image: none !important;
     }
  
     .code-intro-img {
         position: relative !important;
         z-index: 20 !important;
-        padding-bottom: 0px; /* remove intro bottom space */
+        padding-bottom: 30px !important;
         text-align: center;
         flex-shrink: 0;
+        margin-bottom: 20px !important;
     }
 
     .code-intro-img .art-frame {
@@ -1069,22 +1027,22 @@ details[open].faq-item p {
     }
 
     .code-section {
-        height: 100vh !important;
+        height: auto !important;
         min-height: 100vh !important;
         display: flex !important;
         flex-direction: column !important;
-        padding-top: 0 !important; 
-        padding-bottom: 20px !important;
-        overflow: hidden !important;
+        padding-top: 100px !important; 
+        padding-bottom: 60px !important;
+        overflow: visible !important;
     }
 
     .code-layout {
         display: flex !important;
         flex-direction: column !important;
-        height: 100% !important;
+        height: auto !important;
         gap: 0 !important;
         flex: 1;
-        overflow: hidden !important;
+        overflow: visible !important;
     }
 
     .code-text-content {
@@ -1092,7 +1050,9 @@ details[open].faq-item p {
         flex-direction: column !important;
         flex: 1;
         min-height: 0;
-        overflow: hidden !important;
+        overflow: visible !important;
+        -webkit-mask-image: none !important;
+        mask-image: none !important;
     }
 
     .code-list {
@@ -1101,7 +1061,6 @@ details[open].faq-item p {
         position: relative !important;
         margin-top: 0 !important;
         overflow: visible !important;
-        transform: none; /* allow GSAP scroll */
     }
 }
 

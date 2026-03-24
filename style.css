@@ -322,6 +322,42 @@ body {
     }
 }
 
+/* Trust Logos Section */
+.trust-section {
+    margin-top: 80px;
+    margin-bottom: 20px;
+}
+
+.trust-title {
+    font-family: var(--font-heading);
+    font-size: 1.5rem;
+    text-transform: uppercase;
+    color: var(--color-grey-dark);
+    letter-spacing: 0.1em;
+    margin-bottom: 40px;
+}
+
+.trust-logos {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 60px;
+}
+
+.trust-logos img {
+    max-height: 40px;
+    width: auto;
+    filter: grayscale(100%);
+    opacity: 0.5;
+    transition: all 0.3s ease;
+}
+
+.trust-logos img:hover {
+    opacity: 1;
+    filter: grayscale(0%);
+}
+
 /* Expertise Marquee */
 .expertise-marquee-container {
     position: relative;

@@ -15,11 +15,6 @@
     --font-text: 'Manrope', sans-serif;
 }
 
-html {
-    scroll-behavior: smooth;
-    scroll-padding-top: 70px; /* Exact navbar height */
-}
-
 /* Reset */
 * {
     margin: 0;
@@ -29,8 +24,8 @@ html {
 
 html {
     scroll-behavior: smooth;
+    scroll-padding-top: 70px;
     overflow-x: hidden;
-    /* Offset for fixed header */
 }
 
 body {

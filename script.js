@@ -287,15 +287,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (window.gsap && window.ScrollTrigger && window.gsap.to) {
                     let yPos = 0;
                     
-                    if (!isHome) {
-                        // Create a temporary ScrollTrigger to calculate the exact destination
-                        // This perfectly accounts for all pin-spacers before it AND the 70px fixed navbar
-                        let tmpST = ScrollTrigger.create({
-                            trigger: targetElement,
-                            start: "top 70px"
-                        });
-                        yPos = tmpST.start;
-                        tmpST.kill(); // Cleanup
+                    if (!isHome && targetElement.navTrigger) {
+                        // Natively calculated coordinate includes active pin-spacers above it
+                        yPos = targetElement.navTrigger.start;
                     }
 
                     gsap.to(window, {
@@ -373,10 +367,21 @@ document.addEventListener('DOMContentLoaded', () => {
         sections.forEach((section, index) => {
             const container = section.querySelector('.container');
 
+            // Pre-calculate permanent anchor trigger for pixel-perfect navigation targeting
+            if (section.id !== 'hero') {
+                section.navTrigger = ScrollTrigger.create({
+                    trigger: section,
+                    start: "top 70px" // Header offset
+                });
+            }
+
             // Stacking context
+            // Give normal flow to myths, projects, contacts and director so they don't overlap incorrectly
+            const isNormalStacking = section.id === 'myths' || section.id === 'projects' || section.id === 'contact' || section.id === 'director';
+            
             gsap.set(section, {
                 position: 'relative',
-                zIndex: sections.length - index,
+                zIndex: isNormalStacking ? 'auto' : (sections.length - index),
                 opacity: 1 // Ensure section itself is visible
             });
 

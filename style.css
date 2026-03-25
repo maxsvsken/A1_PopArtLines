@@ -1139,8 +1139,15 @@ details[open].faq-item p {
     .director-img {
         order: 1;
     }
+}
 
-    /* Mobile Wrapper for Headers and Intro */
+/* Mobile Nav Bar Fixes (900px and below) */
+@media (max-width: 900px) {
+    .about-text-container,
+    .stagger-text {
+        text-align: center !important;
+    }
+
     #code .section-label,
     #code .code-main-title {
         width: 100% !important;
@@ -1694,5 +1701,13 @@ details[open].faq-item p {
     .modal-content {
         margin: 20% auto;
         padding: 25px;
+    }
+}
+
+/* Specific centering for About text on mobile */
+@media (max-width: 900px) {
+    .about-text-container,
+    .stagger-text {
+        text-align: center !important;
     }
 }

@@ -239,42 +239,53 @@ document.addEventListener('DOMContentLoaded', () => {
         const textsToAnimate = texts.slice(0, -1);
         const cardsToAnimate = cards.slice(0, -1);
 
-        const totalScrollDistance = window.innerHeight * 2; 
+        // Use GSAP matchMedia to only stack on desktop, keeping mobile flow natural
+        let mm = gsap.matchMedia();
 
-        const tl = gsap.timeline({
-            scrollTrigger: {
-                trigger: section,
-                start: "top 70px",
-                end: `+=${totalScrollDistance}`,
-                pin: container,
-                pinSpacing: true,
-                scrub: 1.2,
-                invalidateOnRefresh: true
-            }
+        mm.add("(min-width: 901px)", () => {
+            const totalScrollDistance = window.innerHeight * 2; 
+
+            const tl = gsap.timeline({
+                scrollTrigger: {
+                    trigger: section,
+                    start: "top 70px",
+                    end: `+=${totalScrollDistance}`,
+                    pin: container,
+                    pinSpacing: true,
+                    scrub: 1.2,
+                    invalidateOnRefresh: true
+                }
+            });
+
+            // Loop through each card for granular control
+            textsToAnimate.forEach((text, i) => {
+                const card = cardsToAnimate[i];
+                
+                // Phase 1: Collapse the text
+                tl.to(text, {
+                    height: 0,
+                    opacity: 0,
+                    duration: 1,
+                    ease: "power2.inOut"
+                })
+                // Phase 2: Scale card down slightly to show it's stacking underneath
+                .to(card, {
+                    opacity: 0.7,
+                    scale: 0.98,
+                    marginTop: -10,
+                    duration: 0.6,
+                    ease: "none"
+                }, "<"); 
+                
+                // Add a small pause in scrub timeline between card steps
+                tl.to({}, { duration: 0.2 }); 
+            });
         });
 
-        // Loop through each card for granular control
-        textsToAnimate.forEach((text, i) => {
-            const card = cardsToAnimate[i];
-            
-            // Phase 1: Collapse the text
-            tl.to(text, {
-                height: 0,
-                opacity: 0,
-                duration: 1,
-                ease: "power2.inOut"
-            })
-            // Phase 2: Scale card down slightly to show it's stacking underneath
-            .to(card, {
-                opacity: 0.7,
-                scale: 0.98,
-                marginTop: -10,
-                duration: 0.6,
-                ease: "none"
-            }, "<"); 
-            
-            // Add a small pause in scrub timeline between card steps
-            tl.to({}, { duration: 0.2 }); 
+        mm.add("(max-width: 900px)", () => {
+            // Mobile: kill previous triggers if any and ensure blocks are visible
+            gsap.set(cards, { clearProps: "all" });
+            gsap.set(texts, { clearProps: "all" });
         });
 
         // Force refresh

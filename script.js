@@ -328,7 +328,17 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (window.gsap && window.ScrollTrigger && window.gsap.to) {
                     let yPos = 0;
                     
-                    if (!isHome && targetElement.navTrigger) {
+                    if (targetId === '#contact') {
+                        // For the final footer section, direct element targeting is more robust
+                        // as it bypasses coordinate shifts from the long pinned sections above.
+                        gsap.to(window, {
+                            duration: 0.8,
+                            scrollTo: { y: targetElement, offsetY: 70 },
+                            ease: "power2.out",
+                            overwrite: "auto"
+                        });
+                        return;
+                    } else if (!isHome && targetElement.navTrigger) {
                         // Natively calculated coordinate includes active pin-spacers above it
                         yPos = targetElement.navTrigger.start;
                     }

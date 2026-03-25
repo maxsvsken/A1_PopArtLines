@@ -284,15 +284,25 @@ document.addEventListener('DOMContentLoaded', () => {
             const targetElement = document.querySelector(targetId);
 
             if (targetElement) {
-                if (window.gsap && window.gsap.to) {
+                if (window.gsap && window.ScrollTrigger && window.gsap.to) {
+                    let yPos = 0;
+                    
+                    if (!isHome) {
+                        // Create a temporary ScrollTrigger to calculate the exact destination
+                        // This perfectly accounts for all pin-spacers before it AND the 70px fixed navbar
+                        let tmpST = ScrollTrigger.create({
+                            trigger: targetElement,
+                            start: "top 70px"
+                        });
+                        yPos = tmpST.start;
+                        tmpST.kill(); // Cleanup
+                    }
+
                     gsap.to(window, {
                         duration: 0.8,
-                        scrollTo: {
-                            y: targetId === '#hero' ? 0 : targetElement,
-                            offsetY: 70, // Height of the fixed header
-                            autoKill: true
-                        },
-                        ease: "power2.out"
+                        scrollTo: yPos,
+                        ease: "power2.out",
+                        overwrite: "auto"
                     });
                 } else {
                     // Primitive fallback

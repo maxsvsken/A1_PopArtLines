@@ -1714,7 +1714,7 @@ details[open].faq-item p {
     min-height: auto !important;
     position: relative;
     z-index: 1;
-    background-color: #ffffff !important;
+    background-color: var(--color-grey-light) !important;
     /* Layer 1: Corner Glows for depth, Layer 2: Halftone Circle Pattern */
     background-image: 
         radial-gradient(circle at 10% 20%, rgba(255, 42, 42, 0.04) 0%, transparent 40%),

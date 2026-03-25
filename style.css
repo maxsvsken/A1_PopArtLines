@@ -1296,8 +1296,8 @@ details[open].faq-item p {
         flex: none !important;
         width: 100%;
         max-width: 100%;
-        margin-top: 80px !important;
-        /* Space for the -60px speech bubble */
+        margin-top: 20px !important;
+        /* Reduced from 80px to bring image higher on mobile */
         overflow: visible !important;
     }
 

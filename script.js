@@ -206,46 +206,54 @@ document.addEventListener('DOMContentLoaded', () => {
         gsap.set(cards, { clearProps: "all" });
         gsap.set(texts, { clearProps: "all" });
 
-        // We only collapse all but the very last card
+        // Collapse all EXCEPT the last card
         const textsToAnimate = texts.slice(0, -1);
         const cardsToAnimate = cards.slice(0, -1);
 
-        // More deliberate scroll distance for 3 cards
-        const scrollDist = window.innerHeight * 2;
+        const totalScrollDistance = window.innerHeight * 2; 
 
         const tl = gsap.timeline({
             scrollTrigger: {
                 trigger: section,
-                start: "top 70px", // Align with fixed navbar
-                end: `+=${scrollDist}`,
+                start: "top 70px",
+                end: `+=${totalScrollDistance}`,
                 pin: container,
                 pinSpacing: true,
-                scrub: 1,
+                scrub: 1.2,
                 invalidateOnRefresh: true
             }
         });
 
-        tl.to(textsToAnimate, {
-            height: 0,
-            opacity: 0,
-            duration: 1,
-            stagger: 0.8,
-            ease: "none"
+        // Loop through each card for granular control
+        textsToAnimate.forEach((text, i) => {
+            const card = cardsToAnimate[i];
+            
+            // Phase 1: Collapse the text
+            tl.to(text, {
+                height: 0,
+                opacity: 0,
+                duration: 1,
+                ease: "power2.inOut"
+            })
+            // Phase 2: Scale card down slightly to show it's stacking underneath
+            .to(card, {
+                opacity: 0.7,
+                scale: 0.98,
+                marginTop: -10,
+                duration: 0.6,
+                ease: "none"
+            }, "<"); 
+            
+            // Add a small pause in scrub timeline between card steps
+            tl.to({}, { duration: 0.2 }); 
         });
 
-        tl.to(cardsToAnimate, {
-            opacity: 0.7, // slightly more transparent for better contrast
-            duration: 1,
-            stagger: 0.8,
-            ease: "none"
-        }, "<");
-
-        // Force GSAP recalculate all markers/triggers
+        // Force refresh
         ScrollTrigger.refresh();
     }
 
-    // Call it after all other initializations are settled
-    setTimeout(initStackingAccordion, 250);
+    // Delay initialization slightly to ensure offsetHeights are ready
+    setTimeout(initStackingAccordion, 300);
 
     // --- Smooth Scroll for anchors ---
     const navAnchors = document.querySelectorAll('.nav-btn, .dot-btn, .logo, .dot-nav a');

@@ -1716,14 +1716,14 @@ details[open].faq-item p {
 .projects-section {
     display: block !important;
     overflow: visible !important;
-    padding-bottom: 100px !important;
+    padding-bottom: 0 !important;
     min-height: auto !important;
 }
 
 .projects-section .container {
     margin-top: 0 !important;
     margin-bottom: 0 !important;
-    max-width: 900px !important;
+    max-width: 1400px !important;
 }
 
 .cards-grid.stacking-accordion {

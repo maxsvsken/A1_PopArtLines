@@ -1713,37 +1713,15 @@ details[open].faq-item p {
     padding-bottom: 0 !important;
     min-height: auto !important;
     position: relative;
-    background-color: #fff !important;
     z-index: 1;
-}
-
-.projects-section::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: -1;
-    /* Layer 1: More visible Halftone Dot Pattern */
-    background-image: radial-gradient(var(--color-accent) 2px, transparent 0);
-    background-size: 32px 32px;
-    opacity: 0.15;
-    pointer-events: none;
-}
-
-.projects-section::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: -2;
-    /* Layer 2: Subtle depth gradient */
-    background: radial-gradient(circle at 10% 20%, rgba(255, 42, 42, 0.03) 0%, transparent 40%),
-                radial-gradient(circle at 90% 80%, rgba(255, 42, 42, 0.03) 0%, transparent 40%);
-    pointer-events: none;
+    background-color: #ffffff !important;
+    /* Layer 1: Corner Glows for depth, Layer 2: Halftone Circle Pattern */
+    background-image: 
+        radial-gradient(circle at 10% 20%, rgba(255, 42, 42, 0.04) 0%, transparent 40%),
+        radial-gradient(circle at 90% 80%, rgba(255, 42, 42, 0.04) 0%, transparent 40%),
+        radial-gradient(rgba(255, 42, 42, 0.12) 2px, transparent 0) !important;
+    background-size: 100% 100%, 100% 100%, 32px 32px !important;
+    background-repeat: no-repeat, no-repeat, repeat !important;
 }
 
 .projects-section .container {

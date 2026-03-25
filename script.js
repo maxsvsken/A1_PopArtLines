@@ -199,38 +199,38 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!cards.length || !grid) return;
 
         cards.forEach((card, i) => {
-            // Each card shrinks when the VERY NEXT card begins to overlap it
+            // Card sinks slightly as its direct follower overlaps
             if (i < cards.length - 1) {
                 const nextCard = cards[i + 1];
                 
                 gsap.to(card, {
                     scrollTrigger: {
                         trigger: nextCard,
-                        start: "top bottom-=100px",
-                        end: "top 25%",
+                        start: "top 65%",
+                        end: "top 15%",
                         scrub: true,
                     },
-                    scale: 0.92,
-                    opacity: 0.5,
-                    filter: "blur(2px)",
+                    scale: 0.94,
+                    opacity: 0.8,
+                    filter: "blur(1px)",
                     transformOrigin: "top center",
                     ease: "none"
                 });
             }
 
-            // Optional: for card 1, you can also add another shrinking step when card 3 comes
+            // Card sinks even deeper when a SUBSEQUENT (3rd) card comes
             if (i === 0 && cards.length > 2) {
                 const thirdCard = cards[2];
                 gsap.to(card, {
                     scrollTrigger: {
                         trigger: thirdCard,
-                        start: "top bottom-=100px",
-                        end: "top 25%",
+                        start: "top 65%",
+                        end: "top 15%",
                         scrub: true,
                     },
-                    scale: 0.85,
-                    opacity: 0.3,
-                    filter: "blur(4px)",
+                    scale: 0.88,
+                    opacity: 0.5,
+                    filter: "blur(2px)",
                 });
             }
         });
@@ -441,7 +441,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             // Мифы и руководство не должны фиксироваться и исчезать мгновенно
-            const isLongSection = section.offsetHeight > window.innerHeight * 1.2 || section.id === 'myths' || section.id === 'director' || section.id === 'code' || section.id === 'hero';
+            const isLongSection = section.offsetHeight > window.innerHeight * 1.2 || section.id === 'myths' || section.id === 'director' || section.id === 'code' || section.id === 'hero' || section.id === 'projects';
 
             if (!isLongSection) {
                 const tl = gsap.timeline({
@@ -465,7 +465,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             } else {
                 // Только для обычных длинных секций делаем fade-out, мифы и руководство не трогаем
-                if (container && section.id !== 'myths' && section.id !== 'director' && section.id !== 'code') {
+                if (container && section.id !== 'myths' && section.id !== 'director' && section.id !== 'code' && section.id !== 'projects') {
                     gsap.to(container, {
                         opacity: 0,
                         scale: 0.9,

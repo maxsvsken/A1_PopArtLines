@@ -195,11 +195,12 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- Smooth Scroll Stacking Accordion GSAP ---
     function initStackingAccordion() {
         const section = document.querySelector('#projects');
+        const container = section ? section.querySelector('.container') : null;
         const grid = document.querySelector('.stacking-accordion');
         const cards = gsap.utils.toArray('.stacking-accordion .strict-card');
         const texts = gsap.utils.toArray('.stacking-accordion .card-collapse-content');
 
-        if (!cards.length || !grid || !texts.length || !section) return;
+        if (!cards.length || !grid || !texts.length || !container) return;
 
         // Reset previous properties
         gsap.set(cards, { clearProps: "all" });
@@ -209,41 +210,40 @@ document.addEventListener('DOMContentLoaded', () => {
         const textsToAnimate = texts.slice(0, -1);
         const cardsToAnimate = cards.slice(0, -1);
 
-        // Get total height of content to compress for a natural scroll speed
-        let scrollDist = 0;
-        textsToAnimate.forEach(t => scrollDist += t.offsetHeight);
+        // Calculate a generous scroll distance based on window height
+        // This ensures the user has enough 'room' to scroll through the collapse
+        const scrollDist = window.innerHeight * 1.5;
 
         const tl = gsap.timeline({
             scrollTrigger: {
                 trigger: section,
-                start: "top top", // Pin when top hits top of viewport
-                end: `+=${scrollDist + window.innerHeight / 2}`, // dynamic end based on content size
-                pin: true,
+                start: "top top", 
+                end: `+=${scrollDist}`,
+                pin: container, // Pin the inner container
+                pinSpacing: true,
                 scrub: 1,
+                invalidateOnRefresh: true
             }
         });
 
         tl.to(textsToAnimate, {
             height: 0,
             opacity: 0,
-            marginTop: 0,
-            marginBottom: 0,
-            paddingTop: 0,
-            paddingBottom: 0,
+            duration: 1,
             stagger: 0.5,
             ease: "none"
         });
 
         tl.to(cardsToAnimate, {
-            // Apply a slight negative margin to pull the next card up so it overlaps beautifully
-            marginBottom: -25, 
-            opacity: 0.8, // Slightly dim the finished cards
+            opacity: 0.8,
+            duration: 1,
             stagger: 0.5,
             ease: "none"
         }, "<");
     }
 
-    initStackingAccordion();
+    // Delay initialization slightly to ensure offsetHeights are ready
+    setTimeout(initStackingAccordion, 100);
 
     // --- Smooth Scroll for anchors ---
     const navAnchors = document.querySelectorAll('.nav-btn, .dot-btn, .logo, .dot-nav a');

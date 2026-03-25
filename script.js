@@ -263,11 +263,14 @@ document.addEventListener('DOMContentLoaded', () => {
             const href = this.getAttribute('href');
             if (!href) return;
 
-            // --- Unified Smooth Scroll Logic ---
+            // --- Unified Heavy-Duty Smooth Scroll ---
             e.preventDefault();
             const isHome = href === '#' || href === '#hero';
             
-            // Close mobile menu if open
+            // Recalculate all section positions just in case anything shifted
+            if (window.ScrollTrigger) ScrollTrigger.refresh();
+
+            // Handle mobile menu cleanup
             if (navLinks && navLinks.classList.contains('nav-active')) {
                 navLinks.classList.remove('nav-active');
                 navLinks.style.display = '';
@@ -281,34 +284,18 @@ document.addEventListener('DOMContentLoaded', () => {
             const targetElement = document.querySelector(targetId);
 
             if (targetElement) {
-                // If it's home, we just go to top
-                if (isHome) {
-                    gsap.to(window, { duration: 1.2, scrollTo: 0, ease: "power2.inOut" });
-                    return;
-                }
-
-                if (window.gsap && window.ScrollTrigger) {
-                    let triggers = ScrollTrigger.getAll();
-                    // Find if this section has a pin associated with its trigger
-                    let st = triggers.find(t => t.trigger === targetElement && t.vars.pin);
-
-                    if (st) {
-                        // For pinned sections, st.start is the exact wheel position where section hits its pin point
-                        gsap.to(window, {
-                            duration: 1.2,
-                            scrollTo: st.start,
-                            ease: "power2.inOut"
-                        });
-                    } else {
-                        // Standard section target
-                        gsap.to(window, {
-                            duration: 1.2,
-                            scrollTo: { y: targetElement.offsetTop, autoKill: false },
-                            ease: "power2.inOut"
-                        });
-                    }
+                if (window.gsap && window.gsap.to) {
+                    gsap.to(window, {
+                        duration: 0.8,
+                        scrollTo: {
+                            y: targetId === '#hero' ? 0 : targetElement,
+                            offsetY: 70, // Height of the fixed header
+                            autoKill: true
+                        },
+                        ease: "power2.out"
+                    });
                 } else {
-                    // Fallback
+                    // Primitive fallback
                     targetElement.scrollIntoView({ behavior: 'smooth' });
                 }
             }

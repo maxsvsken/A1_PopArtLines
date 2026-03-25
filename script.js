@@ -396,7 +396,8 @@ document.addEventListener('DOMContentLoaded', () => {
     if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
         gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
 
-        const sections = document.querySelectorAll('section');
+        // Include the footer in the scroll tracking because it contains the Contact anchor
+        const sections = document.querySelectorAll('section, footer#contact');
         const dotBtns = document.querySelectorAll('.dot-btn');
 
         const updateDot = (index) => {

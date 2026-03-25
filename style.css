@@ -1743,15 +1743,15 @@ details[open].faq-item p {
     border-radius: 30px;
     border: 1px solid var(--color-border);
     transform-origin: top center;
-    will-change: transform, opacity, filter;
+    will-change: transform, opacity;
     z-index: 10;
     transition: box-shadow 0.3s ease;
 }
 
 /* Offset tops to show card headers like tabs */
-.stacking-accordion .strict-card:nth-child(1) { top: 100px; z-index: 10; }
-.stacking-accordion .strict-card:nth-child(2) { top: 115px; z-index: 11; }
-.stacking-accordion .strict-card:nth-child(3) { top: 130px; z-index: 12; margin-bottom: 0px; }
+.stacking-accordion .strict-card:nth-child(1) { top: 110px; z-index: 10; }
+.stacking-accordion .strict-card:nth-child(2) { top: 150px; z-index: 11; }
+.stacking-accordion .strict-card:nth-child(3) { top: 190px; z-index: 12; margin-bottom: 0px; }
 
 @media (max-width: 900px) {
     .stacking-accordion .strict-card {
@@ -1759,9 +1759,9 @@ details[open].faq-item p {
         border-radius: 20px;
         padding: 30px !important;
     }
-    .stacking-accordion .strict-card:nth-child(1) { top: 80px; }
-    .stacking-accordion .strict-card:nth-child(2) { top: 95px; }
-    .stacking-accordion .strict-card:nth-child(3) { top: 110px; }
+    .stacking-accordion .strict-card:nth-child(1) { top: 90px; }
+    .stacking-accordion .strict-card:nth-child(2) { top: 120px; }
+    .stacking-accordion .strict-card:nth-child(3) { top: 150px; }
 }
 
 

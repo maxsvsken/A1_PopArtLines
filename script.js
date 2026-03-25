@@ -198,39 +198,41 @@ document.addEventListener('DOMContentLoaded', () => {
         const cards = gsap.utils.toArray('.stacking-accordion .strict-card');
         if (!cards.length || !grid) return;
 
+        // Reset any initial states to ensure sharpness
+        gsap.set(cards, { clearProps: "all" });
+
         cards.forEach((card, i) => {
-            // Card sinks slightly as its direct follower overlaps
+            // As the next card scrolls into position, current card sinks a bit
             if (i < cards.length - 1) {
                 const nextCard = cards[i + 1];
                 
                 gsap.to(card, {
                     scrollTrigger: {
                         trigger: nextCard,
-                        start: "top 65%",
-                        end: "top 15%",
+                        start: "top 85%", // Starts earlier but finishes right when needed
+                        end: "top 20%",   // Finishes when nextCard is near its slot
                         scrub: true,
                     },
-                    scale: 0.94,
+                    scale: 0.95,
                     opacity: 0.8,
-                    filter: "blur(1px)",
+                    filter: "none", // Remove blur to fix "расплывчато"
                     transformOrigin: "top center",
                     ease: "none"
                 });
             }
 
-            // Card sinks even deeper when a SUBSEQUENT (3rd) card comes
+            // For the first card, an extra slight shrink when the 3rd card comes
             if (i === 0 && cards.length > 2) {
                 const thirdCard = cards[2];
                 gsap.to(card, {
                     scrollTrigger: {
                         trigger: thirdCard,
-                        start: "top 65%",
-                        end: "top 15%",
+                        start: "top 85%",
+                        end: "top 20%",
                         scrub: true,
                     },
-                    scale: 0.88,
-                    opacity: 0.5,
-                    filter: "blur(2px)",
+                    scale: 0.9,
+                    opacity: 0.6,
                 });
             }
         });

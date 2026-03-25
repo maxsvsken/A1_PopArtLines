@@ -307,49 +307,48 @@ document.addEventListener('DOMContentLoaded', () => {
             // --- Unified Heavy-Duty Smooth Scroll ---
             e.preventDefault();
             const isHome = href === '#' || href === '#hero';
-            
-            // Recalculate all section positions just in case anything shifted
-            if (window.ScrollTrigger) ScrollTrigger.refresh();
+            const targetId = isHome ? '#hero' : href;
+            const targetElement = document.querySelector(targetId);
 
-            // Handle mobile menu cleanup
-            if (navLinks && navLinks.classList.contains('nav-active')) {
+            // Handle mobile menu cleanup FIRST
+            const mobileMenuWasOpen = navLinks && navLinks.classList.contains('nav-active');
+            if (mobileMenuWasOpen) {
                 navLinks.classList.remove('nav-active');
                 navLinks.style.display = '';
                 const b = document.getElementById('burger');
                 if (b) b.classList.remove('open');
                 const n = document.querySelector('.navbar');
                 if (n) n.classList.remove('menu-open');
-                document.body.style.overflow = ''; // Unlock scroll
+                document.body.style.overflow = '';
             }
 
-            const targetId = isHome ? '#hero' : href;
-            const targetElement = document.querySelector(targetId);
+            if (!targetElement) return;
 
-            if (targetElement) {
-                if (window.gsap && window.ScrollTrigger && window.gsap.to) {
-                    let yPos = 0;
-                    
-                    if (!isHome) {
-                        if (targetElement.navTrigger) {
-                            // Natively calculated coordinate includes active pin-spacers above it
-                            yPos = targetElement.navTrigger.start;
-                        } else {
-                            // Fallback for elements without a navTrigger (e.g. footer)
-                            yPos = targetElement.getBoundingClientRect().top + window.scrollY - 70;
-                        }
+            // Delay scroll so the mobile menu has time to collapse first,
+            // ensuring getBoundingClientRect returns the correct position
+            const delay = mobileMenuWasOpen ? 120 : 0;
+
+            setTimeout(() => {
+                if (window.ScrollTrigger) ScrollTrigger.refresh();
+
+                let yPos = 0;
+                if (!isHome) {
+                    if (targetElement.navTrigger) {
+                        yPos = targetElement.navTrigger.start;
+                    } else {
+                        const navHeight = document.querySelector('.navbar')?.offsetHeight || 70;
+                        yPos = targetElement.getBoundingClientRect().top + window.scrollY - navHeight;
                     }
-
-                    gsap.to(window, {
-                        duration: 0.8,
-                        scrollTo: yPos,
-                        ease: "power2.out",
-                        overwrite: "auto"
-                    });
-                } else {
-                    // Primitive fallback
-                    targetElement.scrollIntoView({ behavior: 'smooth' });
                 }
-            }
+
+                if (window.lenis) {
+                    window.lenis.scrollTo(yPos, { duration: 0.9, ease: (t) => 1 - Math.pow(1 - t, 3) });
+                } else if (window.gsap) {
+                    gsap.to(window, { duration: 0.8, scrollTo: yPos, ease: 'power2.out', overwrite: 'auto' });
+                } else {
+                    window.scrollTo({ top: yPos, behavior: 'smooth' });
+                }
+            }, delay);
         });
     });
 

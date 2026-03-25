@@ -192,50 +192,55 @@ document.addEventListener('DOMContentLoaded', () => {
 
     initAboutAnimation();
 
-    // --- Smooth Scroll Stacking Accordion ---
+    // --- Smooth Scroll Stacking Accordion GSAP ---
     function initStackingAccordion() {
+        const section = document.querySelector('#projects');
         const grid = document.querySelector('.stacking-accordion');
         const cards = gsap.utils.toArray('.stacking-accordion .strict-card');
-        if (!cards.length || !grid) return;
+        const texts = gsap.utils.toArray('.stacking-accordion .card-collapse-content');
 
-        // Reset any initial states to ensure sharpness
+        if (!cards.length || !grid || !texts.length || !section) return;
+
+        // Reset previous properties
         gsap.set(cards, { clearProps: "all" });
+        gsap.set(texts, { clearProps: "all" });
 
-        cards.forEach((card, i) => {
-            // As the next card scrolls into position, current card sinks a bit
-            if (i < cards.length - 1) {
-                const nextCard = cards[i + 1];
-                
-                gsap.to(card, {
-                    scrollTrigger: {
-                        trigger: nextCard,
-                        start: "top 85%", // Starts earlier but finishes right when needed
-                        end: "top 20%",   // Finishes when nextCard is near its slot
-                        scrub: true,
-                    },
-                    scale: 0.95,
-                    opacity: 0.8,
-                    filter: "none", // Remove blur to fix "расплывчато"
-                    transformOrigin: "top center",
-                    ease: "none"
-                });
-            }
+        // We only collapse all but the very last card
+        const textsToAnimate = texts.slice(0, -1);
+        const cardsToAnimate = cards.slice(0, -1);
 
-            // For the first card, an extra slight shrink when the 3rd card comes
-            if (i === 0 && cards.length > 2) {
-                const thirdCard = cards[2];
-                gsap.to(card, {
-                    scrollTrigger: {
-                        trigger: thirdCard,
-                        start: "top 85%",
-                        end: "top 20%",
-                        scrub: true,
-                    },
-                    scale: 0.9,
-                    opacity: 0.6,
-                });
+        // Get total height of content to compress for a natural scroll speed
+        let scrollDist = 0;
+        textsToAnimate.forEach(t => scrollDist += t.offsetHeight);
+
+        const tl = gsap.timeline({
+            scrollTrigger: {
+                trigger: section,
+                start: "top top", // Pin when top hits top of viewport
+                end: `+=${scrollDist + window.innerHeight / 2}`, // dynamic end based on content size
+                pin: true,
+                scrub: 1,
             }
         });
+
+        tl.to(textsToAnimate, {
+            height: 0,
+            opacity: 0,
+            marginTop: 0,
+            marginBottom: 0,
+            paddingTop: 0,
+            paddingBottom: 0,
+            stagger: 0.5,
+            ease: "none"
+        });
+
+        tl.to(cardsToAnimate, {
+            // Apply a slight negative margin to pull the next card up so it overlaps beautifully
+            marginBottom: -25, 
+            opacity: 0.8, // Slightly dim the finished cards
+            stagger: 0.5,
+            ease: "none"
+        }, "<");
     }
 
     initStackingAccordion();

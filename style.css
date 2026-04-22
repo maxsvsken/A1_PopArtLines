@@ -692,7 +692,7 @@ body {
 
 /* Sections General */
 .strict-section {
-    padding: 110px 0 140px 0; /* Header (70px) + Gap (40px) */
+    padding: 120px 0 !important;
     min-height: 100vh;
     min-height: 100dvh;
     display: flex;
@@ -706,8 +706,7 @@ body {
     background: var(--color-white);
     position: relative;
     overflow: hidden;
-    padding-top: 80px !important;
-    padding-bottom: 60px; /* Space for marquee */
+    padding: 80px 0 60px 0 !important; /* Keep hero specific paddings */
 }
 
 .strict-section>.container {
@@ -2150,7 +2149,6 @@ details[open].faq-item p {
 .projects-section {
     display: block !important;
     overflow: visible !important;
-    padding: 100px 0 !important;
     position: relative;
     z-index: 1;
     background-color: var(--color-grey-light) !important;
@@ -2212,7 +2210,6 @@ details[open].faq-item p {
 .together-section {
     background-color: var(--color-white) !important;
     min-height: auto !important;
-    padding: 120px 0 !important;
     display: flex;
     align-items: center;
 }

@@ -2015,8 +2015,7 @@ details[open].faq-item p {
 .projects-section {
     display: block !important;
     overflow: visible !important;
-    padding-bottom: 0 !important;
-    min-height: auto !important;
+    padding: 100px 0 !important;
     position: relative;
     z-index: 1;
     background-color: var(--color-grey-light) !important;

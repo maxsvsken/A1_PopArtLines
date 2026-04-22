@@ -2175,15 +2175,17 @@ details[open].faq-item p {
     background-color: var(--color-white) !important;
     min-height: auto !important;
     padding: 120px 0 !important;
+    display: flex;
+    align-items: center;
 }
 
 .together-section > .container {
-    margin-bottom: 0 !important;
+    margin: 0 auto !important;
 }
 
 .together-list-wrapper {
     max-width: 100%;
-    margin: 60px auto 0 auto;
+    margin: 40px auto 0 auto;
 }
 
 .together-list {

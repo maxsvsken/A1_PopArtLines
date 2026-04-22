@@ -28,18 +28,28 @@ document.addEventListener('DOMContentLoaded', () => {
     const burger = document.getElementById('burger');
     const navLinks = document.querySelector('.nav-links');
 
-    if (burger) {
-        burger.addEventListener('click', () => {
+    if (burger && navLinks) {
+        burger.addEventListener('click', (e) => {
+            e.stopPropagation();
             const navbar = document.querySelector('.navbar');
-            navLinks.style.display = ''; // Clear inline block/none styles
             navLinks.classList.toggle('nav-active');
             burger.classList.toggle('open');
             if (navbar) navbar.classList.toggle('menu-open');
             
-            // Prevent background scrolling when menu is open on mobile
             if (navLinks.classList.contains('nav-active')) {
                 document.body.style.overflow = 'hidden';
             } else {
+                document.body.style.overflow = '';
+            }
+        });
+
+        // Close menu when clicking outside
+        document.addEventListener('click', (e) => {
+            if (navLinks.classList.contains('nav-active') && !navLinks.contains(e.target) && !burger.contains(e.target)) {
+                navLinks.classList.remove('nav-active');
+                burger.classList.remove('open');
+                const navbar = document.querySelector('.navbar');
+                if (navbar) navbar.classList.remove('menu-open');
                 document.body.style.overflow = '';
             }
         });
@@ -302,7 +312,7 @@ document.addEventListener('DOMContentLoaded', () => {
     setTimeout(initStackingAccordion, 300);
 
     // --- Smooth Scroll for anchors ---
-    const navAnchors = document.querySelectorAll('.nav-btn, .dot-btn, .logo, .dot-nav a');
+    const navAnchors = document.querySelectorAll('.nav-btn, .dot-btn, .logo, .dot-nav a, .hero-btn');
 
     navAnchors.forEach(anchor => {
         anchor.addEventListener('click', function (e) {
@@ -366,21 +376,34 @@ document.addEventListener('DOMContentLoaded', () => {
             const animate = () => {
                 const target = +counter.getAttribute('data-target');
                 const hasPlus = counter.getAttribute('data-plus') === 'true';
-                const countString = counter.innerText.replace('%', '').replace('+', '');
+                const prefix = counter.getAttribute('data-prefix') || '';
+                const suffix = counter.getAttribute('data-suffix') || '';
+                
+                // Get current numeric value from text
+                const countString = counter.innerText
+                    .replace(prefix, '')
+                    .replace(suffix, '')
+                    .replace('%', '')
+                    .replace('+', '');
+                
                 const count = +countString || 0;
                 const inc = Math.max(target / speed, 1);
 
                 if (count < target) {
                     const nextCount = Math.min(count + inc, target);
                     let displayValue = Math.ceil(nextCount);
-                    if (hasPlus) {
-                        counter.innerText = displayValue + '+';
-                    } else {
-                        counter.innerText = displayValue;
-                    }
+                    
+                    let result = prefix + displayValue;
+                    if (hasPlus) result += '+';
+                    result += suffix;
+                    
+                    counter.innerText = result;
                     setTimeout(animate, 30);
                 } else {
-                    counter.innerText = target + (hasPlus ? '+' : '');
+                    let result = prefix + target;
+                    if (hasPlus) result += '+';
+                    result += suffix;
+                    counter.innerText = result;
                 }
             }
             animate();

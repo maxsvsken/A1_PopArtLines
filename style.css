@@ -2133,6 +2133,9 @@ details[open].faq-item p {
         margin-left: auto !important;
         margin-right: auto !important;
     }
+    .stats-strip {
+        order: 2 !important;
+    }
 }
 
 /* Specific centering for About text on mobile */

@@ -583,6 +583,23 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }
 
+        // --- Together Section Animation ---
+        const togetherCards = gsap.utils.toArray('.together-card');
+        if (togetherCards.length) {
+            gsap.from(togetherCards, {
+                scrollTrigger: {
+                    trigger: '.together-list-wrapper',
+                    start: 'top 90%', // Trigger when the top of the wrapper is 90% down the viewport
+                    toggleActions: 'play none none none'
+                },
+                x: (i) => i % 2 === 0 ? -100 : 100,
+                opacity: 0,
+                duration: 0.6,
+                stagger: 0.15,
+                ease: 'power3.out'
+            });
+        }
+
         window.addEventListener('load', () => {
             setTimeout(() => {
                 ScrollTrigger.refresh();

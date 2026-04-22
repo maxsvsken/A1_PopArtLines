@@ -2107,6 +2107,14 @@ details[open].faq-item p {
     .legend-art-container {
         order: -1 !important;
         margin-bottom: 20px !important;
+        display: flex !important;
+        justify-content: center !important;
+    }
+    .legend-content, 
+    .legend-content .section-title,
+    .legend-content .section-desc,
+    .legend-content .accent-text-block {
+        text-align: center !important;
     }
 }
 

@@ -1128,12 +1128,11 @@ details[open].faq-item p {
 
 /* Code Layout */
 .code-section {
-    padding: 120px 0 200px 0 !important;
-    height: 100vh !important;
+    padding: 120px 0 300px 0 !important; /* Significantly increased for better background visibility */
     min-height: 100vh !important;
     display: flex !important;
     align-items: flex-start !important;
-    overflow: hidden !important;
+    position: relative;
 }
 
 .code-layout {
@@ -1173,8 +1172,7 @@ details[open].faq-item p {
     display: flex;
     flex-direction: column;
     overflow: hidden;
-    -webkit-mask-image: linear-gradient(to bottom, black 0%, black calc(100% - 80px), transparent 100%);
-    mask-image: linear-gradient(to bottom, black 0%, black calc(100% - 80px), transparent 100%);
+    /* Removed mask that caused 'cut off' feeling */
 }
 
 .code-list {

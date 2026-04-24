@@ -386,8 +386,8 @@ document.addEventListener('DOMContentLoaded', () => {
                                     gsap.set(list, { clearProps: "all" });
                                     if (title) gsap.set(title, { clearProps: "all" });
                                     const listHeight = list.offsetHeight;
-                                    // Increased buffer to 250px to ensure Rule 10 is fully visible
-                                    scrollDistance = Math.max(0, listHeight - window.innerHeight + 250);
+                                    // Increased buffer to 500px to ensure Rule 10 is fully visible and not cut off
+                                    scrollDistance = Math.max(0, listHeight - window.innerHeight + 500);
                                 },
                                 onUpdate: (self) => {
                                     if (scrollDistance > 0) {

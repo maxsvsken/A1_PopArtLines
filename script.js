@@ -386,9 +386,9 @@ document.addEventListener('DOMContentLoaded', () => {
                                     gsap.set(list, { clearProps: "all" });
                                     if (title) gsap.set(title, { clearProps: "all" });
                                     const listHeight = list.offsetHeight;
-                                    const sidebarHeight = sidebar.offsetHeight;
-                                    // Scroll exactly so the bottom of the list aligns with the bottom of the sidebar
-                                    scrollDistance = Math.max(0, listHeight - sidebarHeight);
+                                    const containerHeight = list.parentElement.offsetHeight;
+                                    // Scroll so the bottom of the list aligns with the bottom of the padded area
+                                    scrollDistance = Math.max(0, listHeight - containerHeight);
                                 },
                                 onUpdate: (self) => {
                                     if (scrollDistance > 0) {

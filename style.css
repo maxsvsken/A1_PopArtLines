@@ -1129,11 +1129,12 @@ details[open].faq-item p {
 /* Code Layout */
 .code-section {
     padding: 120px 0 !important;
+    height: 100vh !important;
     min-height: 100vh !important;
     display: flex !important;
-    align-items: flex-start !important;
+    align-items: stretch !important;
+    overflow: hidden !important;
     position: relative;
-    overflow: visible !important;
 }
 
 .code-layout {
@@ -1141,7 +1142,8 @@ details[open].faq-item p {
     grid-template-columns: 1fr 1.5fr;
     gap: 0 80px;
     width: 100%;
-    align-items: flex-start;
+    height: 100%;
+    align-items: stretch;
 }
 
 .code-layout .section-label {
@@ -1150,12 +1152,12 @@ details[open].faq-item p {
 }
 
 .code-sidebar {
-    position: sticky;
-    top: 20px;
     display: flex;
     flex-direction: column;
-    gap: 20px; /* Reduced gap to bring title closer to image */
+    gap: 20px;
     text-align: center;
+    justify-content: center;
+    height: 100%;
 }
 
 .code-main-title {

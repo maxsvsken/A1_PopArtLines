@@ -55,106 +55,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Hero Interactive Background Grid
-    function initHeroBackground() {
-        const canvas = document.getElementById('hero-canvas');
-        if (!canvas) return;
-        const ctx = canvas.getContext('2d');
-        let width, height;
-        let particles = [];
-        const spacing = 40;
-        const mouse = { x: -1000, y: -1000, radius: 150 };
 
-        function resize() {
-            width = canvas.width = window.innerWidth;
-            height = canvas.height = window.innerHeight;
-            initParticles();
-        }
-
-        class Particle {
-            constructor(x, y) {
-                this.x = x;
-                this.y = y;
-                this.baseX = x;
-                this.baseY = y;
-                this.size = 1.5;
-                this.density = (Math.random() * 30) + 1;
-            }
-
-            draw() {
-                ctx.fillStyle = 'rgba(51, 51, 51, 0.2)'; // Dark grey dots with slight transparency
-                ctx.beginPath();
-                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                ctx.closePath();
-                ctx.fill();
-            }
-
-            update(t) {
-                // Wave movement
-                let waveX = Math.sin(t + (this.baseX * 0.01)) * 5;
-                let waveY = Math.cos(t + (this.baseY * 0.01)) * 5;
-
-                let currentBaseX = this.baseX + waveX;
-                let currentBaseY = this.baseY + waveY;
-
-                let dx = mouse.x - this.x;
-                let dy = mouse.y - this.y;
-                let distance = Math.sqrt(dx * dx + dy * dy);
-                let forceDirectionX = dx / distance;
-                let forceDirectionY = dy / distance;
-                let maxDistance = mouse.radius;
-                let force = (maxDistance - distance) / maxDistance;
-                let directionX = forceDirectionX * force * this.density;
-                let directionY = forceDirectionY * force * this.density;
-
-                if (distance < mouse.radius) {
-                    this.x -= directionX;
-                    this.y -= directionY;
-                } else {
-                    if (this.x !== currentBaseX) {
-                        let dx = this.x - currentBaseX;
-                        this.x -= dx / 20;
-                    }
-                    if (this.y !== currentBaseY) {
-                        let dy = this.y - currentBaseY;
-                        this.y -= dy / 20;
-                    }
-                }
-            }
-        }
-
-        function initParticles() {
-            particles = [];
-            for (let y = 0; y < height; y += spacing) {
-                for (let x = 0; x < width; x += spacing) {
-                    particles.push(new Particle(x, y));
-                }
-            }
-        }
-
-        let time = 0;
-
-        function animate() {
-            ctx.clearRect(0, 0, width, height);
-            time += 0.01;
-            for (let i = 0; i < particles.length; i++) {
-                particles[i].draw();
-                particles[i].update(time);
-            }
-            requestAnimationFrame(animate);
-        }
-
-        window.addEventListener('mousemove', (e) => {
-            mouse.x = e.x;
-            mouse.y = e.y;
-        });
-
-        window.addEventListener('resize', resize);
-        resize();
-        animate();
-    }
-
-    initHeroBackground();
 
     // --- Hero GSAP Animation ---
     function initHeroAnimation() {
@@ -425,18 +326,20 @@ document.addEventListener('DOMContentLoaded', () => {
         observer.observe(statsStrip);
     }
 
+    const dotBtns = document.querySelectorAll('.dot-btn');
+
+    const updateDot = (index) => {
+        dotBtns.forEach((btn, i) => {
+            btn.classList.toggle('active', i === index);
+        });
+    };
+
     // --- GSAP Zoom Scroll Animation ---
     if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
         gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
 
         const sections = document.querySelectorAll('section');
-        const dotBtns = document.querySelectorAll('.dot-btn');
 
-        const updateDot = (index) => {
-            dotBtns.forEach((btn, i) => {
-                btn.classList.toggle('active', i === index);
-            });
-        };
 
         sections.forEach((section, index) => {
             const container = section.querySelector('.container');
@@ -522,8 +425,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             }
 
-            // Мифы и руководство не должны фиксироваться и исчезать мгновенно
-            const isLongSection = section.offsetHeight > window.innerHeight * 1.2 || section.id === 'myths' || section.id === 'director' || section.id === 'code' || section.id === 'hero' || section.id === 'projects';
+            // Мифы, руководство и экспертиза не должны фиксироваться и исчезать мгновенно, так как их высота может меняться или они длинные
+            const isLongSection = section.offsetHeight > window.innerHeight * 1.2 || 
+                                 ['myths', 'director', 'code', 'hero', 'projects', 'today'].includes(section.id);
 
             if (!isLongSection) {
                 const tl = gsap.timeline({
@@ -546,8 +450,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     });
                 }
             } else {
-                // Только для обычных длинных секций делаем fade-out, мифы и руководство не трогаем
-                if (container && section.id !== 'myths' && section.id !== 'director' && section.id !== 'code' && section.id !== 'projects') {
+                // Только для обычных длинных секций делаем fade-out, мифы, экспертизу и руководство не трогаем
+                if (container && !['myths', 'director', 'code', 'projects', 'today'].includes(section.id)) {
                     // Adjust fade-out start for mobile to prevent early disappearance
                     const fadeStart = window.innerWidth < 768 ? "bottom 100%" : "bottom 80%";
                     
@@ -563,7 +467,6 @@ document.addEventListener('DOMContentLoaded', () => {
                     });
                 }
             }
-
             // Dot tracking
             ScrollTrigger.create({
                 trigger: section,
@@ -575,7 +478,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         // Ensure footer visibility
-        const footer = document.querySelector('footer');
         if (footer) {
             gsap.set(footer, { position: 'relative', zIndex: 100 });
             ScrollTrigger.create({
@@ -704,16 +606,16 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // --- FAQ (Myths) Refresh ScrollTrigger on toggle ---
-    const faqDetails = document.querySelectorAll('#myths details');
-    faqDetails.forEach(detail => {
+    // --- FAQ (Myths & Expertise) Refresh ScrollTrigger on toggle ---
+    const allDetails = document.querySelectorAll('details');
+    allDetails.forEach(detail => {
         detail.addEventListener('toggle', () => {
             // Give it a tiny moment for the browser to calculate the new height
             setTimeout(() => {
                 if (window.ScrollTrigger) {
                     ScrollTrigger.refresh();
                 }
-            }, 50);
+            }, 100); // Slightly more delay for stability
         });
     });
 

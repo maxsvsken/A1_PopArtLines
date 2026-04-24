@@ -99,7 +99,7 @@ body {
 /* Backgrounds & Unique Pop-Art Patterns */
 .hero {
     position: relative;
-    overflow: hidden;
+    overflow: visible;
     background-color: var(--color-white);
     min-height: 100vh;
     min-height: 100dvh;
@@ -421,14 +421,14 @@ body {
 /* 02 Director & Myths Sections - Blue Rays Pattern */
 .director-section {
     position: relative;
-    overflow: hidden;
+    overflow: visible;
     background-color: var(--color-white) !important;
     z-index: 20 !important;
 }
 
 .myths-section {
     position: relative;
-    overflow: hidden;
+    overflow: visible;
     background-color: var(--color-white) !important;
     z-index: 20 !important;
 }
@@ -718,13 +718,13 @@ body {
 }
 
 .hero {
-    height: 100vh;
+    min-height: 100vh;
     display: flex;
     align-items: center;
     background: var(--color-white);
     position: relative;
-    overflow: hidden;
-    padding: 80px 0 60px 0 !important; /* Keep hero specific paddings */
+    overflow: visible;
+    padding: 100px 0 60px 0 !important; /* Slightly more top padding for safety */
 }
 
 .strict-section>.container {
@@ -1132,7 +1132,8 @@ details[open].faq-item p {
     min-height: 100vh !important;
     height: auto !important;
     display: flex !important;
-    align-items: flex-start !important;
+    flex-direction: column !important;
+    justify-content: center !important; /* Center the layout grid */
     overflow: visible !important;
     position: relative;
 }
@@ -1142,8 +1143,8 @@ details[open].faq-item p {
     grid-template-columns: 1fr 1.5fr;
     gap: 0 80px;
     width: 100%;
-    height: 100%;
-    align-items: stretch;
+    height: auto; /* Size to content height */
+    align-items: stretch; /* Columns match each other's height */
 }
 
 .code-layout .section-label {
@@ -1156,8 +1157,8 @@ details[open].faq-item p {
     flex-direction: column;
     gap: 20px;
     text-align: center;
-    justify-content: center;
-    height: 100%;
+    align-items: center; /* Center title and image horizontally */
+    height: auto;
 }
 
 .code-main-title {
@@ -1168,20 +1169,22 @@ details[open].faq-item p {
 }
 
 .code-intro-img {
-    margin-bottom: 40px;
+    margin-bottom: 0;
 }
 
 .code-text-content {
     display: flex;
     flex-direction: column;
     overflow: hidden;
-    /* Removed mask that caused 'cut off' feeling */
+    height: 0; /* Prevents the list from expanding the grid row */
+    min-height: 100%; /* Matches the sidebar height */
+    position: relative;
 }
 
 .code-list {
     display: flex;
     flex-direction: column;
-    padding-bottom: 20px; /* Minimal air at the very bottom */
+    padding-bottom: 0;
     padding-right: 20px;
 }
 
@@ -1203,8 +1206,16 @@ details[open].faq-item p {
     display: flex;
     gap: 30px;
     padding: 20px 0;
-    /* Balanced padding */
     border-bottom: 1px solid #333333;
+}
+
+.code-item:first-child {
+    padding-top: 0;
+}
+
+.code-item:last-child {
+    padding-bottom: 0;
+    border-bottom: none;
 }
 
 .code-num {

@@ -59,29 +59,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- Hero GSAP Animation ---
     function initHeroAnimation() {
-        const subtitle = document.querySelector('.hero-subtitle');
-        if (subtitle) {
-            const text = subtitle.textContent.trim();
-            subtitle.innerHTML = '';
-            for (let i = 0; i < text.length; i++) {
-                let s = text[i];
-                let span = document.createElement('span');
-                span.className = 'char';
-                span.innerHTML = s === ' ' ? '&nbsp;' : s;
-                subtitle.appendChild(span);
-            }
-        }
-
-        // Make elements visible for GSAP to animate from their hidden state
-        gsap.set([".hero-image-wrapper", ".title-word", ".char", ".hero-btn"], { autoAlpha: 1 });
+        // Make elements visible immediately
+        gsap.set([".hero-image-wrapper", ".hero-title", ".hero-subtitle", ".hero-btn"], { autoAlpha: 1 });
 
         const tl = gsap.timeline({ defaults: { ease: "power4.out" } });
 
         tl.from(".hero-image-wrapper", { y: 100, rotateX: 15, autoAlpha: 0, scale: 0.8, duration: 1.5 })
             .from(".hero-image", { scale: 1.4, duration: 1.5 }, "<")
-            .from(".title-word", { yPercent: 120, rotateX: -80, autoAlpha: 0, duration: 1.2, stagger: 0.15, ease: "back.out(1.2)" }, "-=0.8")
-            .from(".char", { autoAlpha: 0, y: 10, duration: 0.1, stagger: 0.01 }, "-=0.4")
-            .from(".hero-btn", { y: 40, autoAlpha: 0, duration: 1.2, ease: "back.out(1.5)" }, "-=1.0");
+            .from([".hero-title", ".hero-subtitle"], { y: 20, autoAlpha: 0, duration: 1, stagger: 0.2 }, "-=0.8")
+            .from(".hero-btn", { y: 40, autoAlpha: 0, duration: 1.2, ease: "back.out(1.5)" }, "-=0.8");
     }
 
     initHeroAnimation();
@@ -91,44 +77,16 @@ document.addEventListener('DOMContentLoaded', () => {
         const title = document.querySelector('.stagger-text');
         if (!title) return;
 
-        const originalText = title.textContent.trim();
-        const words = originalText.split(/\s+/);
-        title.innerHTML = '';
-        
-        words.forEach((word, wordIndex) => {
-            const wordSpan = document.createElement('span');
-            wordSpan.style.display = 'inline-block';
-            wordSpan.style.whiteSpace = 'nowrap';
-            
-            for (let i = 0; i < word.length; i++) {
-                let char = word[i];
-                let charSpan = document.createElement('span');
-                charSpan.className = 'stagger-char';
-                charSpan.innerHTML = char;
-                wordSpan.appendChild(charSpan);
-            }
-            
-            title.appendChild(wordSpan);
-            
-            // Add a space after the word (except the last one)
-            if (wordIndex < words.length - 1) {
-                title.appendChild(document.createTextNode(' '));
-            }
-        });
-
-        const chars = title.querySelectorAll('.stagger-char');
-        
-        gsap.from(chars, {
+        gsap.from(title, {
             scrollTrigger: {
                 trigger: title,
                 start: "top 85%",
                 toggleActions: "play none none none"
             },
-            y: 50,
+            y: 30,
             opacity: 0,
-            stagger: 0.015, // Faster stagger for long text
-            duration: 0.6,
-            ease: "back.out(1.7)"
+            duration: 0.8,
+            ease: "power2.out"
         });
     }
 
@@ -387,13 +345,14 @@ document.addEventListener('DOMContentLoaded', () => {
                                     if (title) gsap.set(title, { clearProps: "all" });
                                     const listHeight = list.scrollHeight;
                                     const containerHeight = list.parentElement.offsetHeight;
-                                    // Scroll with an extra buffer to ensure the very end is reached
-                                    scrollDistance = Math.max(0, listHeight - containerHeight + 100);
+                                    // Scroll exactly to the end of the list
+                                    scrollDistance = Math.max(0, listHeight - containerHeight);
                                 },
                                 onUpdate: (self) => {
                                     if (scrollDistance > 0) {
                                         const scrollY = scrollDistance * self.progress;
-                                        gsap.set(list, { y: -scrollY });
+                                        // Use precise transform to match the bottom boundary
+                                        gsap.set(list, { y: -scrollY, force3D: true });
                                     }
                                 }
                             }

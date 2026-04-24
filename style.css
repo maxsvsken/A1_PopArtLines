@@ -1653,6 +1653,10 @@ details[open].faq-item p {
         height: auto !important;
     }
 
+    .expertise-item summary {
+        padding-right: 20px !important; /* Smaller gap on tablets where dots are hidden */
+    }
+
     .today-section .art-frame {
         height: auto !important;
         margin-bottom: 30px;
@@ -2158,7 +2162,7 @@ details[open].faq-item p {
     }
     .expertise-item summary {
         font-size: 1.1rem; /* Slightly smaller for mobile */
-        padding: 15px 0;
+        padding: 15px 20px 15px 0 !important; /* Adjusted for mobile */
     }
     .exp-content {
         padding: 0 0 15px 40px; /* Reduced padding-left for mobile */

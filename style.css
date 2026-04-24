@@ -1129,11 +1129,11 @@ details[open].faq-item p {
 /* Code Layout */
 .code-section {
     padding: 120px 0 !important;
-    height: 100vh !important;
     min-height: 100vh !important;
     display: flex !important;
     align-items: flex-start !important;
-    overflow: hidden !important;
+    position: relative;
+    overflow: visible !important;
 }
 
 .code-layout {

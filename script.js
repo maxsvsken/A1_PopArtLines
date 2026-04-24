@@ -66,7 +66,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
         tl.from(".hero-image-wrapper", { y: 100, rotateX: 15, autoAlpha: 0, scale: 0.8, duration: 1.5 })
             .from(".hero-image", { scale: 1.4, duration: 1.5 }, "<")
-            .from([".hero-title", ".hero-subtitle"], { y: 20, autoAlpha: 0, duration: 1, stagger: 0.2 }, "-=0.8")
             .from(".hero-btn", { y: 40, autoAlpha: 0, duration: 1.2, ease: "back.out(1.5)" }, "-=0.8");
     }
 

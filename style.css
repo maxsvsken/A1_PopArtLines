@@ -1311,6 +1311,16 @@ details[open].faq-item p {
     color: var(--color-grey-dark);
 }
 
+/* Fix for Investors section empty space */
+#investors {
+    min-height: auto !important;
+}
+
+#investors .container {
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+}
+
 /* Footer Layout */
 .site-footer {
     padding: 100px 0 40px 0;

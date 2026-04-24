@@ -425,9 +425,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             }
 
-            // Мифы, руководство и экспертиза не должны фиксироваться и исчезать мгновенно, так как их высота может меняться или они длинные
+            // Мифы, руководство, экспертиза и инвесторы не должны фиксироваться и исчезать мгновенно
             const isLongSection = section.offsetHeight > window.innerHeight * 1.2 || 
-                                 ['myths', 'director', 'code', 'hero', 'projects', 'today'].includes(section.id);
+                                 ['myths', 'director', 'code', 'hero', 'projects', 'today', 'investors'].includes(section.id);
 
             if (!isLongSection) {
                 const tl = gsap.timeline({
@@ -450,8 +450,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     });
                 }
             } else {
-                // Только для обычных длинных секций делаем fade-out, мифы, экспертизу и руководство не трогаем
-                if (container && !['myths', 'director', 'code', 'projects', 'today'].includes(section.id)) {
+                // Только для обычных длинных секций делаем fade-out, исключаем ключевые разделы
+                if (container && !['myths', 'director', 'code', 'projects', 'today', 'investors'].includes(section.id)) {
                     // Adjust fade-out start for mobile to prevent early disappearance
                     const fadeStart = window.innerWidth < 768 ? "bottom 100%" : "bottom 80%";
                     

@@ -60,7 +60,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- Hero GSAP Animation ---
     function initHeroAnimation() {
         // Make elements visible immediately
-        gsap.set([".hero-image-wrapper", ".hero-title", ".hero-subtitle", ".hero-btn"], { autoAlpha: 1 });
+        gsap.set([".hero-image-wrapper", ".hero-title", ".hero-subtitle", ".title-word", ".hero-btn"], { autoAlpha: 1 });
 
         const tl = gsap.timeline({ defaults: { ease: "power4.out" } });
 
